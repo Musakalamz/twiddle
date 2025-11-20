@@ -46,20 +46,20 @@ export default async function RootLayout({
         <ClerkProvider>
           <body>
             <main className={`${inter.className} bg-black`}>
-              <TopBar />
+              {/* <TopBar /> */}
 
               <main className="flex flex-row">
-                <LeftSideBar />
+                {/* <LeftSideBar /> */}
 
                 <section className="main-container">
                   <div className="w-full flex justify-center items-center min-h-screen">
                     {children}
                   </div>
                 </section>
-                <RightSideBar />
+                {/* <RightSideBar /> */}
               </main>
 
-              <BottomBar />
+              {/* <BottomBar /> */}
             </main>
           </body>
         </ClerkProvider>

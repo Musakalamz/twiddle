@@ -11,9 +11,13 @@ export default async function Home() {
       </>
     );
   }
+
   return (
     <main>
-      <h1 className="text-center">Twiddle</h1>;
+      <h1 className="text-center">
+        Twiddle
+        {/* <LandingPage /> */}
+      </h1>
     </main>
   );
 }
