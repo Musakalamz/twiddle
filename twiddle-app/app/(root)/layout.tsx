@@ -4,6 +4,10 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
+import TopBar from "@/components/shared/TopBar";
+import LeftSideBar from "@/components/shared/LeftSideBar";
+import RightSideBar from "@/components/shared/RightSideBar";
+import BottomBar from "@/components/shared/BottomBar";
 
 export const metadata: Metadata = {
   title: "Twiddle",
@@ -46,20 +50,20 @@ export default async function RootLayout({
         <ClerkProvider>
           <body>
             <main className={`${inter.className} bg-black`}>
-              {/* <TopBar /> */}
+              <TopBar />
 
               <main className="flex flex-row">
-                {/* <LeftSideBar /> */}
+                <LeftSideBar />
 
                 <section className="main-container">
                   <div className="w-full flex justify-center items-center min-h-screen">
                     {children}
                   </div>
                 </section>
-                {/* <RightSideBar /> */}
+                <RightSideBar />
               </main>
 
-              {/* <BottomBar /> */}
+              <BottomBar />
             </main>
           </body>
         </ClerkProvider>
