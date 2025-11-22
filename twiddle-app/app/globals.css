@@ -45,6 +45,10 @@
   @apply relative flex flex-col items-center gap-1 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
 }
 
+.topbar {
+  @apply fixed top-0 z-30 flex w-full items-center justify-between bg-dark-2 px-6 py-3;
+}
+
 @layer utilities {
   .custom-scrollbar::-webkit-scrollbar {
     width: 3px;
