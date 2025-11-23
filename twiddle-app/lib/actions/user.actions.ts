@@ -13,7 +13,7 @@ export const createUser = async ({
   image,
 }: CreateUserParams): Promise<void> => {
   try {
-    connectToDB();
+    await connectToDB();
     await User.create({
       id: userId,
       username: username?.toLowerCase(),
@@ -28,7 +28,7 @@ export const createUser = async ({
 
 export const fetchUser = async (userId: string) => {
   try {
-    connectToDB();
+    await connectToDB();
 
     return await User.findOne({
       id: userId,
@@ -48,7 +48,7 @@ export const updateUser = async ({
   image,
 }: updateUserParams): Promise<void> => {
   try {
-    connectToDB();
+    await connectToDB();
     await User.findOneAndUpdate(
       { id: userId },
       {
