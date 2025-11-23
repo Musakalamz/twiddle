@@ -21,8 +21,9 @@ export const createUser = async ({
       email,
       image,
     });
-  } catch (err: any) {
-    throw new Error(`Failed to create user: ${err.message}`);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`Failed to create user: ${message}`);
   }
 };
 
@@ -33,8 +34,9 @@ export const fetchUser = async (userId: string) => {
     return await User.findOne({
       id: userId,
     });
-  } catch (err: any) {
-    throw new Error(`Failed to fetch user: ${err.message}`);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`Failed to fetch user: ${message}`);
   }
 };
 
@@ -63,7 +65,8 @@ export const updateUser = async ({
     );
 
     if (path === "/profile/edit") revalidatePath(path);
-  } catch (err: any) {
-    throw new Error(`Failed to update user info: ${err.message}`);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`Failed to update user info: ${message}`);
   }
 };
