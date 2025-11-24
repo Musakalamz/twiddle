@@ -3,7 +3,13 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { createUser, updateUser } from "@/lib/actions/user.actions";
-import { addMemberToGroup, createGroup, deleteGroup, removeUserFromGroup, updateGroupInfo } from '@/lib/actions/group.actions'
+import {
+  addMemberToGroup,
+  createGroup,
+  deleteGroup,
+  removeUserFromGroup,
+  updateGroupInfo,
+} from "@/lib/actions/group.actions";
 
 export async function POST(req: Request) {
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
