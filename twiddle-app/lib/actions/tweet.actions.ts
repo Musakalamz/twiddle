@@ -287,36 +287,53 @@ export const fetchTweetById = async (id: string) => {
    
 };
 
-export const addCommentToTweet = async (
-  tweetId: string,
-  commentText: string,
-  userId: string,
-  path: string
-) => {
-  connectToDB();
-  try {
-    const originalTweet = await Tweet.findById(tweetId);
-    if (!originalTweet) throw new Error("Tweet Not Found!!!");
-
-    const commentTweet = new Tweet({
-      text: commentText,
-      author: userId,
-      parentId: tweetId,
-    });
-
-    const savedCommentTweet = await commentTweet.save();
-
-    // Update user's replies
-    await User.findByIdAndUpdate(userId, {
-      $push: { replies: savedCommentTweet._id },
-    });
-
-    originalTweet.children.push(savedCommentTweet._id);
-    await originalTweet.save();
-    revalidatePath(path);
-  }catch (err: unknown) {
-    const message = err instanceof Error ? err.message : String(err);
-    throw new Error(`Error adding comment to tweet: ${message}`);
+export async function likeOrDislikeTweet(userId: string, tweetId: string, path: string) {
+    try {
+      connectToDB();
   
+  
+      // Find the user and check if they have already liked the tweet
+      const user = await User.findOne({ id: userId });
+      if (!user) throw new Error("User not found");
+  
+      let tweet;
+  
+      if (user.likedTweets.includes(tweetId)) {
+        // If the tweet is already liked, decrement its likes and remove it from the user's likedTweets
+        tweet = await Tweet.findByIdAndUpdate(
+          tweetId,
+          { $inc: { likes: -1 } },
+          { new: true } // Return the updated document
+        );
+  
+        if (!tweet) {
+          throw new Error("Tweet not found");
+        }
+  
+        // Remove the tweet from the user's likedTweets array
+        user.likedTweets = user.likedTweets.filter((id: any) => id.toString() !== tweetId);
+      } else {
+        // If the tweet is not liked, increment its likes and add it to the user's likedTweets
+        tweet = await Tweet.findByIdAndUpdate(
+          tweetId,
+          { $inc: { likes: 1 } },
+          { new: true } // Return the updated document
+        );
+  
+  
+        if (!tweet) {
+          throw new Error("Tweet not found");
+        }
+  
+        // Add the tweet to the user's likedTweets array
+        user.likedTweets.push(tweetId);
+      }
+  
+      await user.save();
+      revalidatePath(path)
+  
+    } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`Failed to like or dislike tweet: ${message}`);
+    }
   }
-};
