@@ -180,3 +180,124 @@ export const deleteGroup = async (groupId: string) => {
     throw error;
   }
 };
+
+export const fetchGroups = async ({
+  searchString = "",
+  pageNumber = 1,
+  pageSize = 20,
+  sortBy = "desc",
+}: {
+  searchString?: string;
+  pageNumber?: number;
+  pageSize?: number;
+  sortBy?: SortOrder;
+}) => {
+  try {
+    connectToDB();
+
+    // Calculate the number of groups to skip based on the page number and page size.
+    const skipAmount = (pageNumber - 1) * pageSize;
+
+    // Create a case-insensitive regular expression for the provided search string.
+    const regex = new RegExp(searchString, "i");
+
+    // Create an initial query object to filter groups.
+    const query: FilterQuery<typeof Group> = {};
+
+    // If the search string is not empty, add the $or operator to match either username or name fields.
+    if (searchString.trim() !== "") {
+      query.$or = [
+        { username: { $regex: regex } },
+        { name: { $regex: regex } },
+      ];
+    }
+
+    // Define the sort options for the fetched groups based on createdAt field and provided sort order.
+    const sortOptions = { createdAt: sortBy };
+
+    // Create a query to fetch the groups based on the search and sort criteria.
+    const groupsQuery = Group.find(query)
+      .sort(sortOptions)
+      .skip(skipAmount)
+      .limit(pageSize)
+      .populate("members");
+
+    // Count the total number of groups that match the search criteria (without pagination).
+    const totalGroupsCount = await Group.countDocuments(query);
+
+    const groups = await groupsQuery.exec();
+
+    // Check if there are more groups beyond the current page.
+    const isNext = totalGroupsCount > skipAmount + groups.length;
+
+    return { groups, isNext };
+  } catch (error) {
+    console.error("Error fetching groups:", error);
+    throw error;
+  }
+};
+
+export const fetchGroupPosts = async (id: string) => {
+  try {
+    connectToDB();
+
+    const groupPosts = await Group.findById(id).populate({
+      path: "tweets",
+      model: Tweet,
+      options: {
+        sort: { createdAt: "desc" },
+      }, // Sort tweets in descending order by createdAt
+      populate: [
+        {
+          path: "author",
+          model: User,
+          select: "name image id", // Select the "name" and "_id" fields from the "User" model
+        },
+        {
+          path: "retweetOf", // Populate the retweetOf field
+          populate: {
+            path: "author",
+            model: User,
+            select: "_id name image",
+          },
+        },
+        {
+          path: "children",
+          model: Tweet,
+          populate: {
+            path: "author",
+            model: User,
+            select: "image _id", // Select the "name" and "_id" fields from the "User" model
+          },
+        },
+      ],
+    });
+
+    return groupPosts;
+  } catch (error) {
+    // Handle any errors
+    console.error("Error fetching group posts:", error);
+    throw error;
+  }
+};
+
+export const fetchGroupDetails = async (id: string) => {
+  try {
+    connectToDB();
+
+    const groupDetails = await Group.findOne({ id }).populate([
+      "createdBy",
+      {
+        path: "members",
+        model: User,
+        select: "name username image _id id",
+      },
+    ]);
+
+    return groupDetails;
+  } catch (error) {
+    // Handle any errors
+    console.error("Error fetching group details:", error);
+    throw error;
+  }
+};
