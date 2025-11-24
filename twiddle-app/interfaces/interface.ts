@@ -23,3 +23,10 @@ export interface updateUserParams {
   image?: string;
   path?: string;
 }
+
+export interface UserCardProps {
+  id: string;
+  name: string;
+  username: string;
+  imgUrl: string;
+}
