@@ -28,6 +28,32 @@ export default async function Home({
     3
   );
 
+  const items = await Promise.all(
+    result.posts.map(async (tweet) => {
+      const isOwner = await isTweetByUser(userInfo?._id, tweet?._id);
+      return (
+        <div className="mt-10" key={tweet._id}>
+          <TweetCard
+            key={tweet._id}
+            id={tweet._id}
+            currentUserId={user.id}
+            owner={isOwner}
+            DB_userID={userInfo._id}
+            retweetOf={tweet.retweetOf}
+            parentId={tweet.parentId}
+            content={tweet.text}
+            author={tweet.author}
+            group={tweet.group}
+            createdAt={tweet.createdAt}
+            comments={tweet.children}
+            likes={tweet.likes}
+            liked={userInfo.likedTweets.includes(tweet._id)}
+          />
+        </div>
+      );
+    })
+  );
+
   return (
     <>
       <section className="mt-10 flex flex-col gap-10">
@@ -35,28 +61,7 @@ export default async function Home({
           <p className="text-light-1">No tweets found</p>
         ) : (
           <div>
-            {result.posts.map(async (tweet) => {
-              const isOwner = await isTweetByUser(userInfo?._id, tweet?._id);
-              return (
-                <div className="mt-10" key={tweet._id}>
-                  <TweetCard
-                    id={tweet._id}
-                    currentUserId={user.id}
-                    owner={isOwner}
-                    DB_userID={userInfo._id}
-                    retweetOf={tweet.retweetOf}
-                    parentId={tweet.parentId}
-                    content={tweet.text}
-                    author={tweet.author}
-                    group={tweet.group}
-                    createdAt={tweet.createdAt}
-                    comments={tweet.children}
-                    likes={tweet.likes}
-                    liked={userInfo.likedTweets.includes(tweet._id)}
-                  />
-                </div>
-              );
-            })}
+            {items}
             <Pagination
               path="/"
               pageNumber={searchParams?.page ? +searchParams.page : 1}
