@@ -150,9 +150,10 @@ export const isTweetByUser = async (userId: string, tweetId: string) => {
     const tweet = await Tweet.findById(tweetId);
     if (!tweet) throw new Error("Tweet not found");
 
-    return tweet?.author.toString() === userId?.toString();
-  } catch (error: any) {
-    throw new Error(`Failed to check tweet ownership: ${error.message}`);
+  return tweet?.author.toString() === userId?.toString();
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Failed to check tweet ownership: ${message}`);
   }
 };
 
@@ -311,7 +312,7 @@ export async function likeOrDislikeTweet(userId: string, tweetId: string, path: 
         }
   
         // Remove the tweet from the user's likedTweets array
-        user.likedTweets = user.likedTweets.filter((id: any) => id.toString() !== tweetId);
+        user.likedTweets = user.likedTweets.filter((id: unknown) => String(id) !== tweetId);
       } else {
         // If the tweet is not liked, increment its likes and add it to the user's likedTweets
         tweet = await Tweet.findByIdAndUpdate(
