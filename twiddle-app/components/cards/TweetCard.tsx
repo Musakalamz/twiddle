@@ -138,8 +138,9 @@ const TweetCard = ({
                                 {comments.length} repl{comments.length > 1 ? "ies" : "y"}
                               </p>
                               {comments.map(comment => (
-                                <div key={comment.author.id}>
+                                <div>
                                   <Image
+                                  key={comment.author.id}
                                   src={comment.author.image}
                                   alt="Author Image"
                                   width={24}
