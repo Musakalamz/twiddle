@@ -1,4 +1,22 @@
 @import "tailwindcss";
+@theme {
+  --color-primary-500: #877eff;
+  --color-secondary-500: #ffb620;
+  --color-blue: #0095f6;
+  --color-logout-btn: #ff5a5a;
+  --color-navbar-menu: rgba(16, 16, 18, 0.6);
+  --color-dark-1: #000000;
+  --color-dark-2: #121417;
+  --color-dark-3: #101012;
+  --color-dark-4: #1f1f22;
+  --color-light-1: #ffffff;
+  --color-light-2: #efefef;
+  --color-light-3: #7878a3;
+  --color-light-4: #5c5c7b;
+  --color-gray-1: #697c89;
+  --color-glassmorphism: rgba(16, 16, 18, 0.6);
+  --breakpoint-xs: 400px;
+}
 
 @layer components {
   .main-container {
@@ -85,7 +103,7 @@
   }
 
   .comment-form {
-    @apply mt-10 flex items-center gap-4 border-y border-y-dark-4 py-5 max-xs:flex-col !important;
+    @apply mt-10 flex items-center gap-4 border-y border-dark-4 py-5 max-xs:flex-col !important;
   }
 
   .comment-form_btn {

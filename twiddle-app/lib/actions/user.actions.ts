@@ -228,9 +228,9 @@ export const fetchUserPosts = async (userId: string) => {
       ],
     });
     return tweets;
-  } catch (error) {
-    console.error("Error fetching user tweets:", error);
-    throw error;
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Error fetching user tweets: ${message}`);
   }
 };
 
@@ -274,9 +274,10 @@ export const getActivity = async (userId: string) => {
     const userTweets = await Tweet.find({ author: userId });
 
     // Collect all the child tweet ids (replies) from the 'children' field of each user tweet
-    const childTweetIds = userTweets.reduce((acc, userTweet) => {
-      return acc.concat(userTweet.children);
-    }, []);
+    const childTweetIds: Types.ObjectId[] = userTweets.reduce(
+      (acc: Types.ObjectId[], userTweet) => acc.concat(userTweet.children as Types.ObjectId[]),
+      []
+    );
 
     // Find and return the child tweets (replies) excluding the ones created by the same user
     const replies = await Tweet.find({
@@ -289,8 +290,8 @@ export const getActivity = async (userId: string) => {
     });
 
     return replies;
-  } catch (error) {
-    console.error("Error fetching replies: ", error);
-    throw error;
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Error fetching replies: ${message}`);
   }
 };
