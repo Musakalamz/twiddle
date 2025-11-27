@@ -32,8 +32,8 @@ const ProfileHeader = ({ accountId, authUserId, name, username, imgUrl, bio, typ
                     </div>
 
                     <div className="flex-1">
-                        <h2 className="text-left text-heading3-bold text-light-1">{name}</h2>
-                        <p className="text-base-medium text-gray-1">@{username}</p>
+                        <h2 className="text-left text-light-1 text-[24px] leading-[140%] font-bold">{name}</h2>
+                        <p className="text-gray-1 text-[16px] leading-[140%] font-medium">@{username}</p>
                     </div>
 
                     
@@ -42,7 +42,7 @@ const ProfileHeader = ({ accountId, authUserId, name, username, imgUrl, bio, typ
                 </div>
             </div>
 
-            <p className="mt-6 max-w-lg text-base-regular text-light-2">{ bio }</p>
+            <p className="mt-6 max-w-lg text-light-2 text-[16px] leading-[140%] font-normal">{ bio }</p>
             <div className="mt-12 h-0.5 w-full bg-dark-3"/>
 
             {accountId === authUserId && type === 'User' && (

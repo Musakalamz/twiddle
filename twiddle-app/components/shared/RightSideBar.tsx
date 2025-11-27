@@ -20,12 +20,12 @@ const RightSideBar = async () => {
         <>
             <section className="custom-scrollbar rightsidebar">
                 <div className="flex flex-1 flex-col justify-start">
-                    <h3 className="text-heading4-medium text-light-1">
+                    <h3 className="text-light-1 text-[20px] leading-[140%] font-medium">
                         Suggestions
                     </h3>
                 </div>
                 <div className="flex flex-col flex-1 justify-start">
-                    <h3 className="text-heading4-medium text-light-1">
+                    <h3 className="text-light-1 text-[20px] leading-[140%] font-medium">
                         Groups
                     </h3>
                     <div className="mt-7 flex w-[350px] flex-col gap-10">
@@ -45,7 +45,7 @@ const RightSideBar = async () => {
                                 </>
                             ) : (
                                 <>
-                                    <p className="!text-base-regular text-light-3">
+                                    <p className="text-light-3 text-[16px] leading-[140%] font-normal">
                                         No Groups yet
                                     </p>
                                 </>
@@ -55,7 +55,7 @@ const RightSideBar = async () => {
                 </div>
 
                 <div className="flex flex-col flex-1 justify-start">
-                    <h3 className="text-heading4-medium text-light-1">
+                    <h3 className="text-light-1 text-[20px] leading-[140%] font-medium">
                         Users
                     </h3>
                     <div className="mt-7 flex w-[350px] flex-col gap-10">
@@ -74,7 +74,7 @@ const RightSideBar = async () => {
                                 </>
                             ) : (
                                 <>
-                                    <p className="!text-base-regular text-light-3">
+                                    <p className="text-light-3 text-[16px] leading-[140%] font-normal">
                                         No users yet
                                     </p>
                                 </>

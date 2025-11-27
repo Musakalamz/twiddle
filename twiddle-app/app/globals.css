@@ -73,7 +73,10 @@
   }
 
   .head-text {
-    @apply text-heading2-bold text-light-1;
+    @apply text-light-1;
+    font-size: 30px;
+    line-height: 140%;
+    font-weight: 700;
   }
 
   .account-form_input {
