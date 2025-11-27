@@ -1,25 +1,35 @@
-"use server";
-
 import mongoose from "mongoose";
 
-let isConnected: boolean = false;
+declare global {
+  var mongooseConn: {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
+  } | undefined;
+}
 
-export const connectToDB = async (): Promise<void> => {
-  mongoose.set("strictQuery", true);
+const MONGODB_URI = process.env.MONGODB_URI;
 
-  if (!process.env.MONGODB_URL) return console.log("Missing Mongodb Url");
+if (!MONGODB_URI) {
+  throw new Error("❌ Missing MONGODB_URI environment variable");
+}
 
-  if (isConnected) {
-    return console.log("MongoDB connection already istablished");
+export const connectToDB = async () => {
+  if (!global.mongooseConn) {
+    global.mongooseConn = { conn: null, promise: null };
   }
 
-  try {
-    await mongoose.connect(process.env.MONGODB_URL as string);
-
-    isConnected = true;
-    console.log("MongoDB connected");
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : String(err);
-    throw new Error(`Error connecting to Database: ${message}`);
+  if (global.mongooseConn.conn) {
+    return global.mongooseConn.conn;
   }
+
+  if (!global.mongooseConn.promise) {
+    global.mongooseConn.promise = mongoose
+      .connect(MONGODB_URI, {
+        dbName: "your-db-name", // optional but recommended
+      })
+      .then((mongoose) => mongoose);
+  }
+
+  global.mongooseConn.conn = await global.mongooseConn.promise;
+  return global.mongooseConn.conn;
 };
