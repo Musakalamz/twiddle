@@ -56,9 +56,8 @@ const RepliesTab = async ({ currentUserId, accountId, user }: Props) => {
             const isOwner = await isTweetByUser(userInfo?._id, reply?._id)
             const parentTweetId: string | null = reply.parentId
             return (
-              <div>
+              <div key={reply._id}>
                 <TweetCard
-                key={reply._id}
                 id={reply._id}
                 owner = { isOwner }  
                 DB_userID={userInfo?._id}

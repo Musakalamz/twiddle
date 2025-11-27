@@ -8,11 +8,11 @@ import Tweet from "../models/tweet.model";
 import Group from "../models/group.model";
 
 interface CreateUserParams {
-  userId: String;
-  email: String;
-  username: String;
-  name: String;
-  image: String;
+  userId: string;
+  email: string;
+  username: string;
+  name: string;
+  image: string;
 }
 
 export const createUser = async ({
@@ -275,7 +275,8 @@ export const getActivity = async (userId: string) => {
 
     // Collect all the child tweet ids (replies) from the 'children' field of each user tweet
     const childTweetIds: Types.ObjectId[] = userTweets.reduce(
-      (acc: Types.ObjectId[], userTweet) => acc.concat(userTweet.children as Types.ObjectId[]),
+      (acc: Types.ObjectId[], userTweet) =>
+        acc.concat(userTweet.children as Types.ObjectId[]),
       []
     );
 

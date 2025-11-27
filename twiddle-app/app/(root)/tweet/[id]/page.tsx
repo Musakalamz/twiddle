@@ -18,7 +18,7 @@ const Page = async ({params}: {params: {id: string}}) => {
     if(!tweet) {
         return (
             <div className=" flex flex-col items-center text-light-1">
-                <h1 className="mt-10 mb-10 text-heading1-bold" >Sorry, tweet doesn't exist anymore</h1>
+                <h1 className="mt-10 mb-10 text-heading1-bold" >Sorry, tweet doesn&apos;t exist anymore</h1>
                 <Image
                     src='/assets/oops.svg'
                     alt="opps"
@@ -63,7 +63,7 @@ const Page = async ({params}: {params: {id: string}}) => {
                 </div>
     
                 <div className="mt-10">
-                    {tweet.children.map(async (child: any) =>
+                    {tweet.children.map(async (child: { _id: string; parentId: string | null; text: string; author: { id: string; image: string; name: string }; group: { id: string; name: string; image: string } | null; createdAt: string; children: { author: { id: string; image: string } }[]; likes: number }) =>
                     {
                     const isOwner = await isTweetByUser(userInfo?._id, child?._id)
                     return (

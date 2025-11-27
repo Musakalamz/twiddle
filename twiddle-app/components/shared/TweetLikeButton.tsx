@@ -23,8 +23,9 @@ const TweetLikeButton = ({
     const handleLike = async () => {
         try {
             await likeOrDislikeTweet(currentUserId, tweetId, path);
-        } catch (error: any) {
-            console.error("Failed to like or dislike tweet:", error);
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : String(error)
+            console.error("Failed to like or dislike tweet:", message);
         }
     }
 

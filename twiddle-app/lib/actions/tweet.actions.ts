@@ -22,7 +22,7 @@ export const createTweet = async ({
     groupId
 }: TweetParams) => {
     try {
-        connectToDB()
+        await connectToDB()
         const groupIdObject = await Group.findOne({ id: groupId }, { _id: 1 });
         const createdTweet = await Tweet.create({
             text,
@@ -50,13 +50,14 @@ export const createTweet = async ({
 
         revalidatePath(path)
 
-    } catch(err: any) {
-        throw new Error(`Failed to create tweet ${err.message}`)
+    } catch(err: unknown) {
+        const message = err instanceof Error ? err.message : String(err)
+        throw new Error(`Failed to create tweet ${message}`)
     }
 }
 
 export const fetchTweets = async (pageNumber = 1, pageSize = 20) => {
-    connectToDB();
+    await connectToDB();
   
     const skipAmount = (pageNumber - 1) * pageSize;
   
@@ -114,7 +115,7 @@ export const fetchTweets = async (pageNumber = 1, pageSize = 20) => {
     groupId,
   }: RetweetParams) => {
     try {
-      connectToDB();
+      await connectToDB();
       const user = await User.findById(userId);
       if (!user) throw new Error('User not found:');
   
@@ -140,28 +141,30 @@ export const fetchTweets = async (pageNumber = 1, pageSize = 20) => {
   
       revalidatePath(path)
   
-    } catch (error: any) {
-      throw new Error(`Failed to retweet: ${error.message}`);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error)
+      throw new Error(`Failed to retweet: ${message}`);
     }
   }
 
   export const isTweetByUser = async (userId: string, tweetId: string) => {
   
     try {
-      connectToDB();
+      await connectToDB();
   
       const tweet = await Tweet.findById(tweetId);
       if (!tweet) throw new Error('Tweet not found');
   
       return tweet?.author.toString() === userId?.toString();
-    } catch (error: any) {
-      throw new Error(`Failed to check tweet ownership: ${error.message}`);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error)
+      throw new Error(`Failed to check tweet ownership: ${message}`);
     }
   }
 
   export const deleteTweet = async (userId: string, tweetId: string, path: string) => {
     try {
-      connectToDB();
+      await connectToDB();
   
       // Check if the tweet exists and if the user is the author
       const tweet = await Tweet.findById(tweetId);
@@ -239,14 +242,15 @@ export const fetchTweets = async (pageNumber = 1, pageSize = 20) => {
   
       revalidatePath(path);
       
-    } catch (error: any) {
-      throw new Error(`Failed to delete tweet: ${error.message}`);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error)
+      throw new Error(`Failed to delete tweet: ${message}`);
     }
   
   };
 
   export const fetchTweetById = async (id: string) => {
-    connectToDB();
+    await connectToDB();
   
     try {
       const tweet = await Tweet.findById(id)
@@ -289,8 +293,9 @@ export const fetchTweets = async (pageNumber = 1, pageSize = 20) => {
         .exec();
   
       return tweet;
-    } catch (err: any) {
-      throw new Error(`Error fetching tweet: ${err.message}`);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err)
+      throw new Error(`Error fetching tweet: ${message}`);
     }
   };
 
@@ -301,7 +306,7 @@ export const fetchTweets = async (pageNumber = 1, pageSize = 20) => {
     userId: string,
     path: string
   ) => {
-    connectToDB();
+    await connectToDB();
     try {
       const originalTweet = await Tweet.findById(tweetId);
       if (!originalTweet) throw new Error('Tweet Not Found!!!');
@@ -322,7 +327,8 @@ export const fetchTweets = async (pageNumber = 1, pageSize = 20) => {
       originalTweet.children.push(savedCommentTweet._id);
       await originalTweet.save();
       revalidatePath(path);
-    } catch (err: any) {
-      throw new Error(`Error adding comment to tweet: ${err.message}`);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err)
+      throw new Error(`Error adding comment to tweet: ${message}`);
     }
   };

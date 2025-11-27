@@ -30,8 +30,9 @@ const RetweetButton = ({
 
             alert('Retweeted successfully')
 
-        } catch(error: any) {
-            if (error.message.includes('already retweeted')) {
+        } catch(error: unknown) {
+            const message = error instanceof Error ? error.message : String(error)
+            if (message.includes('already retweeted')) {
                 alert('You already retweeted this tweet before')
               } else {
                 alert('An error occurred while retweeting. Please try again.');

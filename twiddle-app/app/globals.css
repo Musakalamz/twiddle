@@ -69,7 +69,7 @@
   }
 
   .user-card_btn {
-    @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 !important;
+    @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1;
   }
 
   .head-text {
@@ -77,11 +77,11 @@
   }
 
   .account-form_input {
-    @apply border border-dark-4 bg-dark-3 text-light-1 !important;
+    @apply border border-dark-4 bg-dark-3 text-light-1;
   }
 
   .no-focus {
-    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0;
   }
 
   /* Group Card */
@@ -90,7 +90,7 @@
   }
 
   .group-card_btn {
-    @apply rounded-lg bg-primary-500 px-5 py-1.5 !text-light-1 !important;
+    @apply rounded-lg bg-primary-500 px-5 py-1.5 text-light-1;
     font-size: 14px;
     line-height: 140%;
     font-weight: 400;
@@ -105,15 +105,15 @@
   }
 
   .tab {
-    @apply flex min-h-[50px] flex-1 items-center gap-3 bg-dark-2 text-light-2 data-[state=active]:bg-[#0e0e12] data-[state=active]:text-light-2 !important;
+    @apply flex min-h-[50px] flex-1 items-center gap-3 bg-dark-2 text-light-2 data-[state=active]:bg-[#0e0e12] data-[state=active]:text-light-2;
   }
 
   .comment-form {
-    @apply mt-10 flex items-center gap-4 border-y border-dark-4 py-5 max-xs:flex-col !important;
+    @apply mt-10 flex items-center gap-4 border-y border-y-dark-4 py-5 max-xs:flex-col;
   }
 
   .comment-form_btn {
-    @apply rounded-3xl bg-primary-500 px-8 py-2 text-light-1 max-xs:w-full !important;
+    @apply rounded-3xl bg-primary-500 px-8 py-2 text-light-1 max-xs:w-full;
     font-size: 14px;
     line-height: 140%;
     font-weight: 400;
@@ -128,7 +128,7 @@
   }
 
   .searchbar_input {
-    @apply border-none bg-dark-3 text-light-4 outline-none !important;
+    @apply border-none bg-dark-3 text-light-4 outline-none;
     font-size: 16px;
     line-height: 140%;
     font-weight: 400;
