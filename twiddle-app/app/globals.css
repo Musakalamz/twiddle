@@ -53,7 +53,10 @@
 
   /* Head Text */
   .head-text {
-    @apply text-heading2-bold text-light-1;
+    @apply text-light-1;
+    font-size: 30px;
+    line-height: 140%;
+    font-weight: 700;
   }
 
   /* User card */
@@ -87,7 +90,10 @@
   }
 
   .group-card_btn {
-    @apply rounded-lg bg-primary-500 px-5 py-1.5 text-small-regular !text-light-1 !important;
+    @apply rounded-lg bg-primary-500 px-5 py-1.5 !text-light-1 !important;
+    font-size: 14px;
+    line-height: 140%;
+    font-weight: 400;
   }
 
   .tweet-card_bar {
@@ -107,7 +113,10 @@
   }
 
   .comment-form_btn {
-    @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
+    @apply rounded-3xl bg-primary-500 px-8 py-2 text-light-1 max-xs:w-full !important;
+    font-size: 14px;
+    line-height: 140%;
+    font-weight: 400;
   }
 
   .notification-card {
@@ -119,7 +128,10 @@
   }
 
   .searchbar_input {
-    @apply border-none bg-dark-3 text-base-regular text-light-4 outline-none !important;
+    @apply border-none bg-dark-3 text-light-4 outline-none !important;
+    font-size: 16px;
+    line-height: 140%;
+    font-weight: 400;
   }
 }
 

@@ -43,7 +43,7 @@ const Page = async () => {
                         ))}
                     </>
                 ) : (
-                    <p className='text-light-1 text-heading2-bold '>
+                    <p className='text-light-1 text-[30px] leading-[140%] font-bold '>
                         No notifications yet
                     </p>
                 )}
