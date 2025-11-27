@@ -2,34 +2,21 @@
 
 import mongoose from "mongoose";
 
-type GlobalMongoState = {
-  connected?: boolean;
-  promise?: Promise<typeof mongoose>;
-};
-
-const globalRef = globalThis as typeof globalThis & {
-  __mongo?: GlobalMongoState;
-};
+let isConnected: boolean = false;
 
 export const connectToDB = async (): Promise<void> => {
   mongoose.set("strictQuery", true);
-  mongoose.set("bufferCommands", false);
 
-  const uri = process.env.MONGODB_URL || process.env.MONGODB_URI;
-  if (!uri)
-    throw new Error(
-      "Missing MongoDB connection string (MONGODB_URL or MONGODB_URI)"
-    );
+  if (!process.env.MONGODB_URL) return console.log("Missing Mongodb Url");
 
-  const state = (globalRef.__mongo ??= {});
-  if (state.connected) return;
+  if (isConnected) {
+    return console.log("MongoDB connection already istablished");
+  }
 
   try {
-    state.promise ??= mongoose.connect(uri as string, {
-      serverSelectionTimeoutMS: 5000,
-    });
-    await state.promise;
-    state.connected = true;
+    await mongoose.connect(process.env.MONGODB_URL as string);
+
+    isConnected = true;
     console.log("MongoDB connected");
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : String(err);
