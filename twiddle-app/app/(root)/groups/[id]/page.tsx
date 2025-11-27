@@ -39,13 +39,13 @@ const Page = async ({ params }: { params: { id: string } }) => {
                 <p className="max-sm:hidden">{tab.label}</p>
 
                 {tab.label === "Tweets" && (
-                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
+                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 text-light-2 text-[10px] leading-[140%] font-medium">
                     {groupDetails.tweets.length}
                   </p>
                 )}
 
                 {tab.label === "Members" && (
-                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
+                  <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 text-light-2 text-[10px] leading-[140%] font-medium">
                     {groupDetails.members.length}
                   </p>
                 )}
