@@ -1,25 +1,31 @@
-'use server'
+"use server"
 
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
 
-let isConnected: boolean = false
+type GlobalMongoState = {
+  connected?: boolean
+  promise?: Promise<typeof mongoose>
+}
+
+const globalRef = globalThis as typeof globalThis & { __mongo?: GlobalMongoState }
 
 export const connectToDB = async (): Promise<void> => {
-    mongoose.set('strictQuery', true)
+  mongoose.set("strictQuery", true)
+  mongoose.set("bufferCommands", false)
 
-    if(!process.env.MONGODB_URL) throw new Error('Missing Mongodb Url')
-    
-    if(isConnected) {
-        return
-    }
+  const uri = process.env.MONGODB_URL || process.env.MONGODB_URI
+  if (!uri) throw new Error("Missing MongoDB connection string (MONGODB_URL or MONGODB_URI)")
 
-    try {
-        await mongoose.connect(process.env.MONGODB_URL as string)
+  const state = (globalRef.__mongo ??= {})
+  if (state.connected) return
 
-        isConnected = true
-        console.log('MongoDB connected')
-    } catch(err: unknown) {
-        const message = err instanceof Error ? err.message : String(err)
-        throw new Error(`Error connecting to Database ${message}`)
-    }
+  try {
+    state.promise ??= mongoose.connect(uri, { serverSelectionTimeoutMS: 5000 })
+    await state.promise
+    state.connected = true
+    console.log("MongoDB connected")
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err)
+    throw new Error(`Error connecting to Database: ${message}`)
+  }
 }
