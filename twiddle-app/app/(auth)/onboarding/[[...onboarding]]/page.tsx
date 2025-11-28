@@ -12,12 +12,8 @@ const Page = async () => {
     if(userInfo?.onboarded) redirect('/')
     
     const userData = {
-        id: user?.id,
-        objectID: userInfo?._id,
-        userName: userInfo ? userInfo?.username : user?.username,
-        name: userInfo ? userInfo?.name : user?.firstName || '',
-        bio: userInfo ? userInfo?.bio : '',
-        image: userInfo ? userInfo?.image : user?.imageUrl
+        id: user.id,
+        bio: userInfo?.bio ?? ''
     }
 
     return (
@@ -38,9 +34,7 @@ const Page = async () => {
                     />
                 </div>
 
-                <AccountInfo
-                    user={userData}
-                />
+                <AccountInfo user={userData} />
             </main>
         </>
     )

@@ -11,7 +11,7 @@ const Page = async () => {
     return (
         <>
             <h1 className="head-text">Create Tweet</h1>
-            <PostTweet userId = { userInfo._id } />
+            <PostTweet userId = { userInfo._id.toString() } />
         </>
     )
 }

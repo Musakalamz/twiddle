@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined };
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
   const user = await currentUser();
   if (!user) {
@@ -23,10 +23,8 @@ export default async function Home({
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
-  const result = await fetchTweets(
-    searchParams.page ? +searchParams.page : 1,
-    3
-  );
+  const sp = await searchParams;
+  const result = await fetchTweets(sp.page ? +sp.page : 1, 3);
 
   return (
     <>
@@ -36,14 +34,14 @@ export default async function Home({
         ) : (
           <div>
             {result.posts.map(async (tweet) => {
-              const isOwner = await isTweetByUser(userInfo?._id, tweet?._id);
+              const isOwner = await isTweetByUser(userInfo?._id.toString(), tweet?._id);
               return (
                 <div className="mt-10" key={tweet._id}>
                   <TweetCard
                     id={tweet._id}
                     currentUserId={user.id}
                     owner={isOwner}
-                    DB_userID={userInfo._id}
+                    DB_userID={userInfo._id.toString()}
                     retweetOf={tweet.retweetOf}
                     parentId={tweet.parentId}
                     content={tweet.text}
@@ -57,11 +55,7 @@ export default async function Home({
                 </div>
               );
             })}
-            <Pagination
-              path="/"
-              pageNumber={searchParams?.page ? +searchParams.page : 1}
-              isNext={result.isNext}
-            />
+            <Pagination path="/" pageNumber={sp?.page ? +sp.page : 1} isNext={result.isNext} />
           </div>
         )}
       </section>
