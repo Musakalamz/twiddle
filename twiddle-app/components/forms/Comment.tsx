@@ -28,7 +28,7 @@ const Comment = ({tweetId, currentUserImg, currentUserId}: Props) => {
       });
 
       const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
-        await addCommentToTweet(tweetId, values.tweet, JSON.parse(currentUserId), pathname) 
+        await addCommentToTweet(tweetId, values.tweet, currentUserId, pathname)
         form.reset()
         }
 
