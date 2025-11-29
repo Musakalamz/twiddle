@@ -7,11 +7,20 @@ import Image from "next/image";
 import TweetsTab from "@/components/shared/TweetsTab";
 import UserCard from "@/components/cards/UserCard";
 
-const Page = async ({ params }: { params: { id: string } }) => {
+const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const user = await currentUser();
   if (!user) return null;
 
-  const groupDetails = await fetchGroupDetails(params.id);
+  const p = await params;
+  const groupDetails = await fetchGroupDetails(p.id);
+  if (!groupDetails) {
+    return (
+      <section className="flex flex-col items-center text-light-1">
+        <h1 className="mt-10 mb-10 text-heading1-bold">Group not found</h1>
+        <Image src="/assets/oops.svg" alt="opps" width={200} height={200} />
+      </section>
+    );
+  }
   return (
     <section>
       <ProfileHeader
@@ -56,7 +65,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
           <TabsContent value="tweets" className="w-full text-light-1">
             <TweetsTab
               currentUserId={user.id}
-              accountId={groupDetails._id}
+              accountId={groupDetails._id.toString()}
               accountType="Group"
               user={user}
             />
