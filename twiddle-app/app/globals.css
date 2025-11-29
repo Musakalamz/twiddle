@@ -36,11 +36,18 @@
   }
 
   .bottombar_container {
-    @apply flex items-center justify-between gap-3 xs:gap-5;
+    @apply flex items-center justify-start gap-3 xs:gap-5 overflow-x-auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .bottombar_container::-webkit-scrollbar {
+    display: none;
   }
 
   .bottombar_link {
     @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
+    flex: none;
   }
 
   .topbar {
