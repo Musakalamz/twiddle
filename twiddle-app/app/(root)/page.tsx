@@ -34,11 +34,11 @@ export default async function Home({
         ) : (
           <div>
             {result.posts.map(async (tweet) => {
-              const isOwner = await isTweetByUser(userInfo?._id.toString(), tweet?._id);
+              const isOwner = await isTweetByUser(userInfo._id.toString(), tweet._id.toString());
               return (
                 <div className="mt-10" key={tweet._id}>
                   <TweetCard
-                    id={tweet._id}
+                    id={tweet._id.toString()}
                     currentUserId={user.id}
                     owner={isOwner}
                     DB_userID={userInfo._id.toString()}
