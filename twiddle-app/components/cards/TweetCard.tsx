@@ -93,8 +93,10 @@ const TweetCard = ({
                           {comments.length} repl
                           {comments.length > 1 ? "ies" : "y"}
                         </p>
-                        {comments.map((comment) => (
-                          <div key={comment.author.id}>
+                        {comments.map((comment, idx) => (
+                          <div
+                            key={comment._id ?? `${comment.author.id}-${idx}`}
+                          >
                             <Image
                               src={comment.author.image}
                               alt="Author Image"

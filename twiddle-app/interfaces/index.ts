@@ -58,6 +58,7 @@ export interface TweetCardProps {
   } | null;
   createdAt: string;
   comments: {
+    _id?: string;
     author: {
       id: string;
       image: string;
