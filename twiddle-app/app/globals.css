@@ -36,9 +36,10 @@
   }
 
   .bottombar_container {
-    @apply flex items-center justify-start gap-3 xs:gap-5 overflow-x-auto;
+    @apply grid grid-flow-col auto-cols-[minmax(72px,1fr)] items-center gap-3 xs:gap-5 overflow-x-auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    scroll-snap-type: x mandatory;
   }
 
   .bottombar_container::-webkit-scrollbar {
@@ -46,8 +47,8 @@
   }
 
   .bottombar_link {
-    @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
-    flex: none;
+    @apply relative flex flex-col items-center gap-2 rounded-lg p-2 px-2 py-2.5;
+    scroll-snap-align: start;
   }
 
   .topbar {

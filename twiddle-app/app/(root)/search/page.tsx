@@ -10,7 +10,7 @@ import { redirect } from "next/navigation";
 const Page = async ({
     searchParams,
   }: {
-    searchParams: { [key: string]: string | undefined };
+    searchParams: Promise<{ [key: string]: string | undefined }>;
   }) => {
     const user = await currentUser();
     if (!user) return null;
@@ -18,16 +18,17 @@ const Page = async ({
     const userInfo = await fetchUser(user.id);
     if (!userInfo?.onboarded) redirect("/onboarding");
 
+    const sp = await searchParams;
     const result = await fetchUsers({
         userId: user.id,
-        searchString: searchParams.q,
-        pageNumber: searchParams?.page ? +searchParams.page : 1,
+        searchString: sp.q,
+        pageNumber: sp?.page ? +sp.page : 1,
         pageSize: 25,
       });
     
       const groupsResult = await fetchGroups({
-        searchString: searchParams.q,
-        pageNumber: searchParams?.page ? +searchParams.page : 1,
+        searchString: sp.q,
+        pageNumber: sp?.page ? +sp.page : 1,
         pageSize: 25
     })
 
@@ -77,7 +78,7 @@ const Page = async ({
 
       <Pagination
         path='search'
-        pageNumber={searchParams?.page ? +searchParams.page : 1}
+        pageNumber={sp?.page ? +sp.page : 1}
         isNext={result.isNext}
       />
     </section>
