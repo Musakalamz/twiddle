@@ -1,16 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
-
-interface Props {
-    id: string;
-    name: string;
-    username: string;
-    imgUrl: string;
-    members: {
-        image: string;
-    } []
-}
+import type { GroupCardProps } from "@/interfaces";
 
 const GroupCard = ({
     id,
@@ -18,7 +9,7 @@ const GroupCard = ({
     username,
     imgUrl,
     members
-}: Props) => {
+}: GroupCardProps) => {
     return (
         <>
             <article className="group-card">

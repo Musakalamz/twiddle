@@ -3,20 +3,14 @@
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "../ui/button"
-
-interface Props {
-    id: string,
-    name: string,
-    username: string,
-    imgUrl: string
-}
+import type { UserCardProps } from "@/interfaces"
 
 const UserCard = ( {
     id,
     name,
     username,
     imgUrl
-}: Props ) => {
+}: UserCardProps ) => {
     const router = useRouter()
     return (
         <>

@@ -10,15 +10,9 @@ import { Input } from "../ui/input";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { addCommentToTweet } from "@/lib/actions/tweet.actions";
+import type { CommentProps } from "@/interfaces";
 
-
-interface Props {
-    tweetId: string,
-    currentUserImg: string,
-    currentUserId: string
-}
-
-const Comment = ({tweetId, currentUserImg, currentUserId}: Props) => {
+const Comment = ({ tweetId, currentUserImg, currentUserId }: CommentProps) => {
     const pathname = usePathname();
     const form = useForm<z.infer<typeof CommentValidation >>({
         resolver: zodResolver(CommentValidation),
@@ -30,7 +24,7 @@ const Comment = ({tweetId, currentUserImg, currentUserId}: Props) => {
       const onSubmit = async (values: z.infer<typeof CommentValidation>) => {
         await addCommentToTweet(tweetId, values.tweet, currentUserId, pathname)
         form.reset()
-        }
+      }
 
       return (
         <>

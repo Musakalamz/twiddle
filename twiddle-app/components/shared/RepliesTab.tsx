@@ -3,64 +3,27 @@ import TweetCard from "../cards/TweetCard";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { isTweetByUser } from "@/lib/actions/tweet.actions";
-
-interface Props {
-    currentUserId: string;
-    accountId: string;
-    user: {
-      id: string
-    }
-  }
-
-  interface Result {
-    name: string;
-    image: string;
-    id: string;
-    replies: {
-      _id: string;
-      text: string;
-      parentId: string | null;
-      author: {
-        name: string;
-        image: string;
-        id: string;
-      };
-      group: {
-        id: string;
-        name: string;
-        image: string;
-      } | null;
-      createdAt: string;
-      children: {
-        author: {
-          id: string;
-          image: string;
-        };
-      }[];
-      likes: number;
-    }[];
-  }
+import type { RepliesTabProps, RepliesTabResult } from "@/interfaces";
   
 
 
 
-const RepliesTab = async ({ currentUserId, accountId, user }: Props) => {
+const RepliesTab = async ({ currentUserId, accountId, user }: RepliesTabProps) => {
     const userInfo = await fetchUser(user.id)
-
-    const result: Result = await fetchUserReplies(accountId);
+    const result: RepliesTabResult = await fetchUserReplies(accountId);
 
     return (
       <section className="mt-9 flex flex-col gap-10">
         {result.replies.map(async (reply) => 
           {
-            const isOwner = await isTweetByUser(userInfo?._id, reply?._id)
+            const isOwner = await isTweetByUser(userInfo._id.toString(), reply._id.toString())
             const parentTweetId: string | null = reply.parentId
             return (
               <div key={reply._id}>
                 <TweetCard
-                id={reply._id}
+                id={reply._id.toString()}
                 owner = { isOwner }  
-                DB_userID={userInfo?._id}
+                DB_userID={userInfo._id.toString()}
                 currentUserId={currentUserId}
                 parentId={reply.parentId}
                 content={reply.text}

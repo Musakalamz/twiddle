@@ -5,14 +5,8 @@ import Group from "../models/group.model";
 import Tweet from "../models/tweet.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
+import type { createGroupParams } from "@/interfaces";
 
-interface createGroupParams {
-    id: string,
-    name  : string;
-    username: string;
-    image: string;
-    createdById: string;
-}
 export const createGroup = async (
     {
       id,

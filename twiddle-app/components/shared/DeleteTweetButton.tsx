@@ -3,16 +3,9 @@
 import { deleteTweet } from "@/lib/actions/tweet.actions";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import type { DeleteTweetButtonProps } from "@/interfaces";
 
-interface Props {
-    userId: string;
-    tweetId: string;
-}
-
-const DeleteTweetButton = ({
-    userId,
-    tweetId
-}: Props) => {
+const DeleteTweetButton = ({ userId, tweetId }: DeleteTweetButtonProps) => {
     const path = usePathname()
     const handleDeleteTweet = async () => {
         await deleteTweet(userId, tweetId, path)

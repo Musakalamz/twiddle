@@ -18,15 +18,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUser } from "@/lib/actions/user.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import type { AccountInfoProps } from "@/interfaces";
 
-interface Props {
-    user: {
-        id: string;
-        bio: string
-    }
-}
-
-const AccountInfo = ( { user }: Props )  => {
+const AccountInfo = ( { user }: AccountInfoProps )  => {
     const pathname = usePathname()
     const router = useRouter()
     const [ showBio, setShowBio ] = useState(false)

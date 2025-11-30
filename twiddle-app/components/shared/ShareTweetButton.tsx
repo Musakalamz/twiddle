@@ -1,14 +1,9 @@
 'use client'
 
 import Image from "next/image";
+import type { ShareTweetButtonProps } from "@/interfaces";
 
-interface Props {
-    tweetPath: string;
-}
-
-const ShareTweetButton = ({
-    tweetPath,
-  }: Props) => {
+const ShareTweetButton = ({ tweetPath }: ShareTweetButtonProps) => {
   
       const copyTweetUrl = () => {
           const domain = window.location.origin

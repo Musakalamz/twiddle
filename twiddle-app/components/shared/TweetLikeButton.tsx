@@ -3,15 +3,14 @@
 import { likeOrDislikeTweet } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import type { TweetLikeButtonProps } from "@/interfaces";
 
-interface Props {
-  tweetId: string;
-  currentUserId: string;
-  likes: number;
-  liked: boolean;
-}
-
-const TweetLikeButton = ({ tweetId, currentUserId, likes, liked }: Props) => {
+const TweetLikeButton = ({
+  tweetId,
+  currentUserId,
+  likes,
+  liked,
+}: TweetLikeButtonProps) => {
   const path = usePathname(); // Get the current path
 
   const handleLike = async () => {

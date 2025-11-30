@@ -6,14 +6,7 @@ import { connectToDB } from "../mongoose";
 import { FilterQuery, SortOrder, Types } from "mongoose";
 import Tweet from "../models/tweet.model";
 import Group from "../models/group.model";
-
-interface CreateUserParams {
-  userId: string;
-  email: string;
-  username: string;
-  name: string;
-  image: string;
-}
+import type { CreateUserParams, updateUserParams } from "@/interfaces";
 
 export const createUser = async ({
   userId,
@@ -50,15 +43,6 @@ export const fetchUser = async (userId: string) => {
   }
 };
 
-interface updateUserParams {
-  userId: string;
-  email?: string;
-  username?: string;
-  name?: string;
-  bio?: string;
-  image?: string;
-  path?: string;
-}
 
 export const updateUser = async ({
   userId,
